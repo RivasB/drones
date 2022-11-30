@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class MedicationInputDTO {
     private String name;
-    private int weigth;
+    private double weigth;
     private String code;
 }

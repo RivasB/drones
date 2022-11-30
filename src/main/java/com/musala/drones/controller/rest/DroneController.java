@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.musala.drones.persistence.entity.Medication;
 import com.musala.drones.persistence.entity.dto.DroneInputDTO;
+import com.musala.drones.persistence.entity.dto.DroneOutputDTO;
 import com.musala.drones.service.DroneService;
 
 import io.swagger.annotations.*;
@@ -27,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Bad Request"),
         @ApiResponse(code = 500, message = "Unexpected error") })
-public class DronesController {
+public class DroneController {
     private final DroneService service;
 
     @ApiOperation(value = "Register", notes = "Registering a drone")
@@ -51,6 +52,18 @@ public class DronesController {
     @GetMapping("/payload/{drone_id}")
     public Collection<Medication> checkPayload(@PathVariable("drone_id") UUID drone_id) {
         return service.getDronePayloadItems(drone_id);
+    }
+
+    @ApiOperation(value = "Check drones for loading", notes = "Checking available drones for loading")
+    @GetMapping("/for_loading")
+    public Collection<DroneOutputDTO> getDronesForLoading() {
+        return service.getDronesForLoading();
+    }
+
+    @ApiOperation(value = "Check Battery", notes = "Check drone battery level for a given drone")
+    @GetMapping("/battery/{drone_id}")
+    public int checkBattery(@PathVariable("drone_id") UUID drone_id) {
+        return service.checkBattery(drone_id);
     }
 
 }

@@ -9,6 +9,8 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,17 +37,19 @@ public class Drone implements Serializable {
     private String serialNumber;
 
     @Column(columnDefinition = "VARCHAR(16)")
+    @Enumerated(EnumType.STRING)
     private DroneModel model;
 
     @Column(name = "weigth_limit")
     @Max(value = 500L, message = "The max value of weigth limit is 500g")
-    private int weightLimit;
+    private double weightLimit;
 
     @Column(name = "battery_capacity")
     @Max(value = 100L, message = "Battery Capacity is a percentage value and can not be greater than 100")
     private int batteryCapacity;
 
     @Column(columnDefinition = "VARCHAR(16)")
+    @Enumerated(EnumType.STRING)
     private DroneState state;
 
     @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -71,5 +75,14 @@ public class Drone implements Serializable {
             throw new DroneControlException("The battery is under 25%", null);
         }
         this.state = state;
+    }
+
+    // Getter that returns the actual payload weigth
+    public double getPayloadWeigth() {
+        double payloadWeigth = 0;
+        for (Medication medication : this.payload) {
+            payloadWeigth = payloadWeigth + medication.getWeigth();
+        }
+        return payloadWeigth;
     }
 }

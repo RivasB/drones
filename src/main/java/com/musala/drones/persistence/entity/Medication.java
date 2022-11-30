@@ -6,6 +6,8 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,6 +42,7 @@ public class Medication implements Serializable {
     private String code;
 
     @Column(columnDefinition = "VARCHAR(16)")
+    @Enumerated(EnumType.STRING)
     private MedicationState state;
 
     @JsonIgnore

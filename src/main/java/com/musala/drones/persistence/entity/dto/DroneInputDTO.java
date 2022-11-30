@@ -8,5 +8,5 @@ import lombok.Data;
 public class DroneInputDTO {
     private String serialNumber;
     private DroneModel model;
-    private int weightLimit;
+    private double weightLimit;
 }
