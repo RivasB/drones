@@ -19,5 +19,5 @@ public class DroneDTOToDroneEntity implements IMapper<DroneInputDTO, Drone> {
         drone.setState(DroneState.IDLE);
         return drone;
     }
-    
+
 }

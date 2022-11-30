@@ -19,11 +19,12 @@ public class SetupDataLoader implements
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
-         if (alreadySetup) return;
-        //Setup data and load here!
-         alreadySetup = true;
+        if (alreadySetup)
+            return;
+        // Setup data and load here!
+        alreadySetup = true;
     }
 
-    //The following methods must be anottated as @Transactional
-    
+    // The following methods must be anottated as @Transactional
+
 }

@@ -34,5 +34,5 @@ public class SwaggerConfig {
                 new Contact("David Alejandro Rivas Bori", "www.dronescontrol.com", "ucirivas@gmail.com"),
                 "License of API", "API license URL", Collections.emptyList());
     }
-    
+
 }

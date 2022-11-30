@@ -22,7 +22,7 @@ import lombok.Data;
 @Entity
 @Data
 public class Medication implements Serializable {
-    
+
     @Id
     @Column(columnDefinition = "BINARY(16)")
     @GeneratedValue(strategy = GenerationType.AUTO)

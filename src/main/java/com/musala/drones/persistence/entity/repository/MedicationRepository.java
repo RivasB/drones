@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.musala.drones.persistence.entity.Medication;
 
 @Repository
-public interface MedicationRepository extends JpaRepository<Medication,UUID>{
-    
+public interface MedicationRepository extends JpaRepository<Medication, UUID> {
+
 }

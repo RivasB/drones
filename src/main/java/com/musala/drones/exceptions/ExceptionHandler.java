@@ -8,7 +8,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
-    @org.springframework.web.bind.annotation.ExceptionHandler(value = {DroneControlException.class})
+    @org.springframework.web.bind.annotation.ExceptionHandler(value = { DroneControlException.class })
     protected ResponseEntity<Object> handleConflict(DroneControlException exception, WebRequest request) {
         String bodyOfResponse = exception.getMessage();
         return handleExceptionInternal(exception, bodyOfResponse,

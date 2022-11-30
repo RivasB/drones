@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 
+import com.musala.drones.exceptions.DroneControlException;
 import com.musala.drones.persistence.entity.enums.DroneModel;
 import com.musala.drones.persistence.entity.enums.DroneState;
 
@@ -24,13 +25,13 @@ import lombok.Data;
 @Entity
 @Data
 public class Drone implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
-    
-    @Column(name="serial_number", unique = true, length = 100, nullable = false)
+
+    @Column(name = "serial_number", unique = true, length = 100, nullable = false)
     private String serialNumber;
 
     @Column(columnDefinition = "VARCHAR(16)")
@@ -50,16 +51,25 @@ public class Drone implements Serializable {
     @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Medication> payload;
 
-    //Empty constructor
-    public Drone(){
+    // Empty constructor
+    public Drone() {
         payloadInitlzr();
     }
 
-    //Drone function to create his own empty payload
-    private void payloadInitlzr(){
-        if (this.getPayload()==null) {
+    // Drone function to create his own empty payload
+    private void payloadInitlzr() {
+        if (this.getPayload() == null) {
             List<Medication> payload = new ArrayList<>();
             this.setPayload(payload);
         }
+    }
+
+    // Setter that prevent
+    // the drone from being in LOADING state if the battery level is below 25%
+    public void setState(DroneState state) {
+        if (this.getBatteryCapacity() <= 25 && state.compareTo(DroneState.LOADING) == 0) {
+            throw new DroneControlException("The battery is under 25%", null);
+        }
+        this.state = state;
     }
 }

@@ -1,4 +1,5 @@
 package com.musala.drones.annotations;
+
 import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)

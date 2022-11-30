@@ -12,6 +12,7 @@ import com.musala.drones.mapper.DroneDTOToDroneEntity;
 import com.musala.drones.persistence.entity.Drone;
 import com.musala.drones.persistence.entity.Medication;
 import com.musala.drones.persistence.entity.dto.DroneInputDTO;
+import com.musala.drones.persistence.entity.enums.DroneState;
 import com.musala.drones.persistence.entity.repository.DroneRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,8 @@ public class DroneService {
     private final DroneDTOToDroneEntity inputMapper;
     private final MedicationService medicationService;
 
-    private Drone findDroneById(UUID id){
+    // Find a drone by the given ID and returns it
+    private Drone findDroneById(UUID id) {
         Optional<Drone> drone = repository.findById(id);
         if (drone.isEmpty()) {
             throw new DroneControlException("Drone not found", HttpStatus.NOT_FOUND);
@@ -32,26 +34,30 @@ public class DroneService {
         return drone.get();
     }
 
+    // Register a new drone
     public void create(DroneInputDTO droneInputDTO) {
         Drone drone = inputMapper.map(droneInputDTO);
         repository.save(drone);
     }
 
+    // Load a medication item into the payload of a given drone
     public void load(UUID drone_id, UUID medication_id) {
         Medication medication = medicationService.findAvailableById(medication_id);
         Drone drone = findDroneById(drone_id);
         int payloadWeigth = 0;
         for (Medication item : drone.getPayload()) {
-            payloadWeigth=payloadWeigth+item.getWeigth();
+            payloadWeigth = payloadWeigth + item.getWeigth();
         }
-        if (payloadWeigth+medication.getWeigth()>drone.getWeightLimit()) {
+        if (payloadWeigth + medication.getWeigth() > drone.getWeightLimit()) {
             throw new DroneControlException("Drone Overload", HttpStatus.FORBIDDEN);
         }
         drone.getPayload().add(medication);
+        drone.setState(DroneState.LOADING);
         repository.save(drone);
     }
 
+    // Returns the payload of a given drone
     public Collection<Medication> getDronePayloadItems(UUID drone_id) {
         return findDroneById(drone_id).getPayload();
-    }    
+    }
 }

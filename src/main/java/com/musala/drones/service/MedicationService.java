@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class MedicationService {
     private final MedicationRepository repository;
 
+    // Find medication by id and returns it if exist
     public Medication findById(UUID medication_id) {
         Optional<Medication> medication = repository.findById(medication_id);
         if (medication.isEmpty()) {
@@ -26,6 +27,7 @@ public class MedicationService {
         return medication.get();
     }
 
+    // Find medication by id, checks if it is available and returns it
     public Medication findAvailableById(UUID medication_id) {
         Medication medication = findById(medication_id);
         if (medication.getState().compareTo(MedicationState.AVAILABLE) != 0) {
