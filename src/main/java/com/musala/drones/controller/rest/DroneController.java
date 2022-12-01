@@ -23,7 +23,7 @@ import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/drones")
+@RequestMapping("/drone")
 @RequiredArgsConstructor
 @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Bad Request"),

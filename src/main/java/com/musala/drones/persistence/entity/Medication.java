@@ -35,7 +35,7 @@ public class Medication implements Serializable {
     private String name;
 
     @Column
-    private int weigth;
+    private double weigth;
 
     @Column
     @Pattern(regexp = "^[A-Z0-9_]*$", message = "Allowed only upper case letters, numbers and underscore")

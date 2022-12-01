@@ -11,10 +11,12 @@
 	
 	<artifactId>drones</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>drones control</name>
+	<packaging>war</packaging>
+	<name>Drones control</name>
 	<description>Drones control for MusalaSoft practical task</description>
 	<properties>
-		<java.version>14</java.version>
+		<java.version>8</java.version>
+		<start-class>com.musala.drones.DronesModuleApplication</start-class>
 	</properties>
 
 	<dependencies>
@@ -44,8 +46,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
